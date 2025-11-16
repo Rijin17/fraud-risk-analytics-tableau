@@ -1,36 +1,51 @@
-# Fraud Risk Analytics – Tableau
+# Fraud Risk Analytics (Tableau)
 
-Interactive Tableau dashboard that turns ML fraud scores into business insights.
+Interactive Tableau dashboard by **Rijin** showing:
+- **Fraud by Hour** – operational monitoring for spikes/outages
+- **Score Distribution** – calibration & drift sanity check
+- **Fraud Rate by Score Band** – business-friendly risk tiers
 
-**What’s inside**
-- `fraud_risk_dashboard.twbx` – packaged Tableau workbook
-- `scored_test.csv` – sample scoring dataset
-- Screenshots: Fraud by Hour, Score Distribution, Fraud Rate by Score Band
+**Live dashboard:** *(add your Tableau Public link once published)*  
+**Download workbook:** [`fraud_risk_dashboard.twbx`](./fraud_risk_dashboard.twbx)  
+**Sample data:** [`scored_test.csv`](./scored_test.csv)
 
-## Live Dashboard
-> (Add link after publishing to Tableau Public)
-> Example: https://public.tableau.com/views/fraud_risk_dashboard/Dashboard1
+## Problem
+Teams need a simple way to monitor fraud model behavior and communicate risk without ML jargon.
 
-## Highlights
-- **Fraud by Hour** – monitors hourly spikes for ops staffing & rule tuning  
-  ![Fraud by Hour](./Fraud%20by%20Hour.png)
+## What’s inside
+- **Fraud by Hour:** average fraud rate by hour.
+- **Score Distribution:** histogram of predicted probabilities.
+- **Fraud Rate by Score Band:** Low / Medium / High / Very High bands.
 
-- **Score Distribution** – sanity check for the ML model; watch for drift/holes  
-  ![Score Distribution](./Score%20Distribution.png)
+## How to open
+1. Download `fraud_risk_dashboard.twbx`.
+2. Open in **Tableau Public (Desktop)** — data is packaged, no setup needed.
 
-- **Fraud Rate by Score Band** – clear risk segmentation (Low/Med/High/Very High)  
-  ![Fraud Rate by Score Band](./Fraud%20Rate%20by%20Score%20Band.png)
+## Data dictionary
+- `Fraud Probability` — model score (0–1)  
+- `Is Fraud` — 0/1 label  
+- `Hour` — transaction hour (0–23) 
+- `Score Band` — calculated field:
 
-## How to open locally
-1. Install **Tableau Public** (free).
-2. Download this repo (`Code → Download ZIP`) or `git clone`.
-3. Open `fraud_risk_dashboard.twbx` in Tableau. The packaged file includes data.
-4. If you prefer, connect `scored_test.csv` and refresh the extracts.
+IF [proba_fraud] >= 0.8 THEN "Very High"
+ELSEIF [proba_fraud] >= 0.6 THEN "High"
+ELSEIF [proba_fraud] >= 0.4 THEN "Medium"
+ELSE "Low" END
 
 
-- Built KPI views aligned to model monitoring: hourly anomalies, distribution drift, and calibrated risk bands.
-- Designed for **explainability** (labels, tooltips, % scales) so non-technical stakeholders can act.
-- Ready to extend with new model versions or live database connections.
+## Talking points (for recruiters/interviews)
+- Designed for **model monitoring**: catches operational spikes (by hour), checks **calibration/drift** (distribution), and presents **actionable risk tiers** for business.
+- Emphasis on **explainability & adoption**: clear % labels, readable bins, and bands that map to policy (review/hold/decline).
+
+## Screenshots
+![Fraud by Hour](./Fraud%20by%20Hour.png)
+![Score Distribution](./Score%20Distribution.png)
+![Fraud Rate by Score Band](./Fraud%20Rate%20by%20Score%20Band.png)
+![Dashboard](./Fraud%20Risk%20Dashboard.png)
 
 ## License
-MIT
+MIT — see [LICENSE](./LICENSE).
+
+---
+
+**Author:** **Rijin Stalin** • LinkedIn: *www.linkedin.com/in/rijin-s-83455326b*
